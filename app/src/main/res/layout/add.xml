@@ -15,7 +15,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="添加单词："
-            android:textSize="25sp"/>
+            android:textSize="20sp"/>
 
         <EditText
             android:id="@+id/inputName"
@@ -36,7 +36,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="添加释义："
-            android:textSize="25sp"/>
+            android:textSize="20sp"/>
 
         <EditText
             android:id="@+id/inputMeaning"
@@ -57,7 +57,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="添加例句："
-            android:textSize="25sp"/>
+            android:textSize="20sp"/>
 
         <EditText
             android:id="@+id/inputExample"
