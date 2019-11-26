@@ -47,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
                 dialog.setPositiveButton("ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        if (1<2)
                             Toast.makeText(MainActivity.this, "添加成功", Toast.LENGTH_LONG).show();
                     }
                 });
@@ -62,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
                 dialog.show();
                 break;
             case R.id.help_item:
-                Toast.makeText(this, "这是一个帮助手册", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "这是一个帮助手册", Toast.LENGTH_SHORT).show();
                 break;
         }
         return true;
