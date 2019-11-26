@@ -47,9 +47,11 @@ public class MainActivity extends AppCompatActivity {
                 dialog.setPositiveButton("ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(MainActivity.this,"添加成功",Toast.LENGTH_LONG).show();
+                        if (1<2)
+                            Toast.makeText(MainActivity.this, "添加成功", Toast.LENGTH_LONG).show();
                     }
                 });
+
                 dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
