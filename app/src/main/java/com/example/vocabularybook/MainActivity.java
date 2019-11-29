@@ -55,7 +55,6 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Toast.makeText(MainActivity.this,"添加失败",Toast.LENGTH_LONG).show();
-
                     }
                 });
                 dialog.show();
