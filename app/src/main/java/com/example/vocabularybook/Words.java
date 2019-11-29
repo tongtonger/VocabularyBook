@@ -22,5 +22,6 @@ public class Words {
     }
     public String getExample() {
         return example;
+
     }
 }
