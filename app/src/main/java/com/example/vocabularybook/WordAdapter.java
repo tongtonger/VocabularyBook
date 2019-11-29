@@ -30,8 +30,6 @@ public class WordAdapter extends ArrayAdapter<Words> {
         View view= LayoutInflater.from(getContext()).inflate(resourceId,parent,false);
         TextView vocabulary=(TextView)view.findViewById(R.id.vocabulary);
         vocabulary.setText(words.getName());
-
-
         return view;
     }
 }
