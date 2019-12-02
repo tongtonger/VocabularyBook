@@ -8,8 +8,11 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -18,6 +21,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -28,6 +32,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private List<Word> wordsList=new ArrayList<>();
+    public static SQLiteDatabase database = null;
     private SQLitedb sqldb;
     private EditText editText = null;
     private ListView listView = null;
@@ -46,8 +51,10 @@ public class MainActivity extends AppCompatActivity {
             //database = SQLiteDatabase.openOrCreateDatabase(SQLitedb.DB_PATH + "/" + SQLitedb.DB_NAME, null);
         }
 
-        editText  = (EditText) findViewById(R.id.input);
-        listView = (ListView) findViewById(R.id.words);
+        database = SQLiteDatabase.openOrCreateDatabase(SQLitedb.DB_PATH + "/" + SQLitedb.DB_NAME, null);
+
+        editText  = (EditText) findViewById(R.id.Search_text);
+        listView = (ListView) findViewById(R.id.wordList);
         editText.setText(null);
         editText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -67,37 +74,55 @@ public class MainActivity extends AppCompatActivity {
                     listView.setAdapter(null);
                 }
 
+
                 else {
                     String sql = "select  * from englishwords where word like ? order by word asc limit 0, 10 ";
-                    String[] data = new String[]{editText.getText().toString() + "%"};
+                    String[] data = new String[]{editText.getText().toString() + "%"};  //模糊查询
                     Word word = null;
                     list = new ArrayList<Word>();
                     Log.e("text", editText.getText().toString());
-                    Cursor cursor = database.rawQuery(sql, new String[]{editText.getText().toString() + "%"});
+                    Cursor cursor = database.rawQuery(sql, new String[]{editText.getText().toString() + "%"});//返回一个结果集
                     //Cursor cursor = database.rawQuery(sql, data);
 
-                    while (cursor.moveToNext()) {
+                    while (cursor.moveToNext()) //遍历整个结果集，返回给word
+                    {
                         word = new Word(cursor.getString(0), cursor.getString(1), cursor.getString(2));
                         Log.e("word", word.toString());
-                        list.add(word);
+                        list.add(word); //放到list中
                     }
                     WordAdapter adapter = new WordAdapter(MainActivity.this, R.layout.word, list);
-                    listView.setAdapter(adapter);
+                    listView.setAdapter(adapter);//显示在
                 }
             }
         });
 
 
+        Configuration mConfiguration = this.getResources().getConfiguration();
+        int ori = mConfiguration.orientation;
 
-
-
-
-
-
-
-        WordAdapter adapter=new WordAdapter(MainActivity.this,R.layout.word,wordsList);
-      //  ListView listView=(ListView)findViewById(R.id.words);
-        listView.setAdapter(adapter);
+        if(ori == mConfiguration.ORIENTATION_LANDSCAPE) {//横屏时，将单词的详细信息送到右侧fragment
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    RightFragment rightFragment = (RightFragment) getSupportFragmentManager().findFragmentById(R.id.right_fragment);
+                    rightFragment.refresh(list.get(position));
+                }
+            });
+        }
+        else {//坚屏时，启动另一个活动，显示单词的详细信息
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Log.e("word = ", list.get(position).getWord());
+                    Intent intent = new Intent(MainActivity.this, WordInfomation.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("word", list.get(position));
+                    //intent.putExtra("word", list.get(position));
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }
+            });
+        }
     }
 
     @Override
@@ -120,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
                 AlertDialog.Builder dialog=new AlertDialog.Builder(MainActivity.this);
                 dialog.setTitle("添加单词");
                 LayoutInflater inflater=getLayoutInflater();
-                View layout=inflater.inflate(R.layout.add,null);
+                View layout=inflater.inflate(R.layout.add_alerdialog,null);
 
                 final EditText word_name = (EditText) layout.findViewById(R.id.word_name);
                 final EditText word_pro = (EditText) layout.findViewById(R.id.word_pro);
@@ -138,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
                 dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(MainActivity.this,"添加失败",Toast.LENGTH_LONG).show();
+                    //    Toast.makeText(MainActivity.this,"添加失败",Toast.LENGTH_LONG).show();
 
                     }
                 });
@@ -146,7 +171,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.help_item:
                 Toast.makeText(this, "这是一个帮助手册!", Toast.LENGTH_SHORT).show();
-                break;
+            break;
         }
         return true;
     }

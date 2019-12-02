@@ -1,43 +1,50 @@
 package com.example.vocabularybook;
 
-public class Word {
-    private String name;
-    private String pro;
-    private String example;
-    private String meaning;
-    public Word(String name, String example)
-    {
-        this.name=name;
-        this.example=example;
-    }
+import androidx.annotation.NonNull;
 
-    public void setName(String name) {
-        this.name = name;
-    }
-    public String getName() {
-        return name;
-    }
+import java.io.Serializable;
 
-    public void setPro(String pro) {
-        this.pro = pro;
-    }
-    public String getPro() {
-        return pro;
-    }
+public class Word  implements Serializable {
+    String word;
+    String pronunciation;
+    String meaning;
 
-    public String getMeaning() {
-        return meaning;
-    }
+    public Word(){};
 
-    public void setMeaning(String meaning) {
+    public Word(String word, String pronunciation, String meaning){
+        this.word = word;
+        this.pronunciation = pronunciation;
         this.meaning = meaning;
     }
 
-    public void setExample(String example) {
-        this.example = example;
+    public void setWord(String word){
+        this.word = word;
     }
-    public String getExample() {
-        return example;
 
+
+    public void setPronunciation(String pronunciation){
+        this.pronunciation = pronunciation;
+    }
+
+    public void setMeaning(String meaning){
+        this.meaning = meaning;
+    }
+
+    public String getWord(){
+        return  word;
+    }
+
+    public String getPronunciation(){
+        return pronunciation;
+    }
+
+    public String getMeaning(){
+        return meaning;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return "word:" + this.word + " pronunciation:" + this.pronunciation + " meaning:" + meaning;
     }
 }

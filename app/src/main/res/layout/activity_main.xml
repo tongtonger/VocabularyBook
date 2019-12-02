@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
     <EditText
-        android:id="@+id/input"
+        android:id="@+id/Search_text"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -14,7 +14,7 @@
         android:textSize="25dp"/>
 
     <ListView
-        android:id="@+id/words"
+        android:id="@+id/wordList"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="4"/>

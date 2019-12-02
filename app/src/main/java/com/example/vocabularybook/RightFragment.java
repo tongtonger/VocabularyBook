@@ -33,8 +33,8 @@ public class RightFragment extends Fragment {
     }
 
     public void refresh(Word word){
-        word_name.setText("单词：" + word.getName());
-        word_pro.setText("发音：" + word.getPro());
+        word_name.setText("单词：" + word.getWord());
+        word_pro.setText("发音：" + word.getPronunciation());
         word_chinese.setText("含义：" + word.getMeaning());
     }
 

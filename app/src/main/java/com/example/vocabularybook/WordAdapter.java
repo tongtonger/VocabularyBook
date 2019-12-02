@@ -29,7 +29,7 @@ public class WordAdapter extends ArrayAdapter<Word> {
         Word words=getItem(position);
         View view= LayoutInflater.from(getContext()).inflate(resourceId,parent,false);
         TextView vocabulary=(TextView)view.findViewById(R.id.vocabulary);
-        vocabulary.setText(words.getName());
+        vocabulary.setText(words.getWord());
 
         return view;
     }
