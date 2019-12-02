@@ -1,11 +1,11 @@
 package com.example.vocabularybook;
 
-public class Words {
+public class Word {
     private String name;
     private String pro;
     private String example;
-
-    public Words(String name,String example)
+    private String meaning;
+    public Word(String name, String example)
     {
         this.name=name;
         this.example=example;
@@ -23,6 +23,14 @@ public class Words {
     }
     public String getPro() {
         return pro;
+    }
+
+    public String getMeaning() {
+        return meaning;
+    }
+
+    public void setMeaning(String meaning) {
+        this.meaning = meaning;
     }
 
     public void setExample(String example) {

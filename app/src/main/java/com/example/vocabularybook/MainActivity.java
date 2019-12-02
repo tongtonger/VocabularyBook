@@ -27,12 +27,12 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private List<Words> wordsList=new ArrayList<>();
+    private List<Word> wordsList=new ArrayList<>();
     private SQLitedb sqldb;
     private EditText editText = null;
     private ListView listView = null;
-    List<Words> list = null;
-    Words word = null;
+    List<Word> list = null;
+    Word word = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,14 +70,14 @@ public class MainActivity extends AppCompatActivity {
                 else {
                     String sql = "select  * from englishwords where word like ? order by word asc limit 0, 10 ";
                     String[] data = new String[]{editText.getText().toString() + "%"};
-                    Words word = null;
-                    list = new ArrayList<Words>();
+                    Word word = null;
+                    list = new ArrayList<Word>();
                     Log.e("text", editText.getText().toString());
                     Cursor cursor = database.rawQuery(sql, new String[]{editText.getText().toString() + "%"});
                     //Cursor cursor = database.rawQuery(sql, data);
 
                     while (cursor.moveToNext()) {
-                        word = new Words(cursor.getString(0), cursor.getString(1), cursor.getString(2));
+                        word = new Word(cursor.getString(0), cursor.getString(1), cursor.getString(2));
                         Log.e("word", word.toString());
                         list.add(word);
                     }

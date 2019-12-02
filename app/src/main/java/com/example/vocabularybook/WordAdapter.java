@@ -14,10 +14,10 @@ import androidx.annotation.Nullable;
 import java.util.List;
 
 
-public class WordAdapter extends ArrayAdapter<Words> {
+public class WordAdapter extends ArrayAdapter<Word> {
 
     private int resourceId;
-    public WordAdapter(@NonNull Context context, int textViewResourceId, @NonNull List<Words> objects) {
+    public WordAdapter(@NonNull Context context, int textViewResourceId, @NonNull List<Word> objects) {
         super(context, textViewResourceId, objects);
         resourceId=textViewResourceId;
     }
@@ -26,7 +26,7 @@ public class WordAdapter extends ArrayAdapter<Words> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
 
-        Words words=getItem(position);
+        Word words=getItem(position);
         View view= LayoutInflater.from(getContext()).inflate(resourceId,parent,false);
         TextView vocabulary=(TextView)view.findViewById(R.id.vocabulary);
         vocabulary.setText(words.getName());
